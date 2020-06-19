@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body>
+<script>
+    //dump(document.location);
+</script>
+<p>Загрузите фото или нажмите кнопку "Открыть камеру", чтобы воспользоваться камерой</p>
+<h2></h2>
+<div>
+    <form method="post" action="" enctype=multipart/form-data>
+        <input type=file name="file">
+        <button type="submit">Загрузить</button>
+    </form>
+</div>
+<div>
+    <form method="post" action="open_cam">
+    <button id="cam" type="submit">Открыть камеру</button>
+</form>
+
+</div>
+
+
+<div>
+<h2> </h2>
+    <form method="POST" action="runFN" >
+        <button name="" type="submit">Запуск</button>
+    </form>
+</div>
+
+</body>
+</html>

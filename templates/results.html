@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>results</title>
+</head>
+<body>
+<div>
+    <p>
+        <h2>Результаты</h2>
+        <div>
+        <p>{% for key in data %}
+            <p>{{ key }}</p>&nbsp;
+            {% endfor %}
+        </p>
+        </div>
+    </p>
+</div>
+<form method="GET" action="index" >
+        <button type="submit">вернуться</button>
+</form>
+<p> <a href="/"> (вернуться) </a></p>
+</body>
+</html>

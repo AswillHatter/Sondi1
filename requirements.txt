@@ -1,0 +1,14 @@
+certifi
+flask
+keras
+matplotlib
+mkl-fft
+mkl-random
+mkl-service
+opencv-python
+pip-chill
+pyreadline
+scikit-learn
+tensorflow
+tornado
+wincertstore

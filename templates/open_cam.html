@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cam</title>
+    <style>
+
+        #videoElement {
+            width: 500px;
+            height: 375px;
+            margin-left: 20px
+        }
+
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <div id="container">
+        <video id="video" width="640px" height="480px" autoplay></video>
+        <button id="snap">Сделать снимок</button>
+        <button id="send" type="submit">ок</button>
+        <canvas id="canvas" width="640px" height="480px" ></canvas>
+        </div>
+
+
+
+<script>
+
+var video = document.getElementById('video');
+var F = 0;
+// Получаем доступ к камере
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Не включаем аудио опцией `{ audio: true }` поскольку сейчас мы работаем только с изображениями
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.srcObject = stream;
+        video.play();
+
+    });
+}
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+
+
+// Обработчик события нажатия на кнопку "Сделать снимок"
+document.getElementById("snap").addEventListener("click", function() {
+	context.drawImage(video, 0, 0, 640, 480);
+});
+
+function saveImage() {
+  var canvasData1 = canvas.toDataURL("image/png");
+  var canvasData = canvasData1.slice(22)
+  var xmlHttpReq = false;
+
+  if (window.XMLHttpRequest) {
+    ajax = new XMLHttpRequest();
+  }
+  else if (window.ActiveXObject) {
+    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  ajax.open("POST", "/close_cam", false);
+  ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  ajax.onreadystatechange = function() {
+    console.log(ajax.responseText);
+  }
+  ajax.send(canvasData);
+}
+
+document.getElementById("send").addEventListener("click", function() {
+
+    saveImage();
+    document.location.href = document.referrer
+
+});
+
+
+
+</script>
+
+</body>
+</html>
