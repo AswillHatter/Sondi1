@@ -1,13 +1,8 @@
 import os
-import cv2
 import glob
-import numpy as np
-import re
 import base64
-import codecs
-from io import BytesIO
-
-from flask import Flask, render_template, redirect, url_for, request, send_from_directory
+import facenet_et as fn
+from flask import Flask, render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 
 
@@ -26,18 +21,17 @@ def uploaded_file(filename):
 
 
 @app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
-#@app.route('/Error', methods=['POST'])
 def hello_world():
-    
     return render_template('index.html')
 
 
+# checking the user`s file extensions
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
+# save image from user`s computer
 @app.route('/', methods=['GET', 'POST'])
 def get_img():
     if request.method == 'POST':
@@ -46,34 +40,27 @@ def get_img():
             filename = secure_filename(file.filename)
             savename = "file." + str(filename).split(".")[1]
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], savename))
-
     return render_template('index.html')
 
 
+# open page with camera in browser
 @app.route('/open_cam', methods=['POST'])
 def open_camera_page():
     return render_template('open_cam.html')
 
 
+# saving photo, which was done with browser
 @app.route('/close_cam', methods=['POST'])
 def close_camera_page():
-    print("do?")
-
     data1 = request.get_data()
-    print(data1)
-
-    #image_data = codecs.decode(data1, encoding='utf-8', errors='strict')
     image_data = base64.decodestring(data1)
-    print('image_data = ', image_data)
     f = open(r"proc_img\file.png", "wb")
     f.write(image_data)
     f.close()
-
-    print("do!")
-
     return render_template('index.html')
 
 
+# processing the image, if it`s exist, or show the Error page otherwise
 @app.route('/runFN', methods=['POST'])
 def run_proc():
     print("run_proc")
@@ -81,7 +68,7 @@ def run_proc():
     print("s = ", s)
     if s is not None:
         print("true")
-        import facenet_et as fn
+
         print("import")
 
         fn.procFile(s)
@@ -91,9 +78,7 @@ def run_proc():
         for f in files:
             os.remove(f)
         mas = fn.mas_of_dist
-
-        #del fn
-
+        # processing received data
         if len(mas) != 0:
             print(mas)
             maspl, masmi = choose(mas)
@@ -103,16 +88,19 @@ def run_proc():
             print("\n", output_mas)
             final_output = format_final_output(output_mas)
         else:
+            # if FaceNet didn`t find face on the picture
             final_output = {"Лицо не обнаружено! Попробуйте загрузить другую фотографию."}
+        # cleaning the directory
         files = glob.glob(r"proc_img\*")
         for f in files:
             os.remove(f)
+
         return render_template('results.html', data = final_output)
     else:
         return render_template('Error.html')
 
 
-
+# forming the output
 def format_final_output(output_mas):
     final_output = []
     for k in output_mas:
@@ -120,6 +108,7 @@ def format_final_output(output_mas):
     return final_output
 
 
+# checking, if the photo exist in the directory
 def do_path():
     s = None
     if os.path.exists(r"proc_img\file.png"):
@@ -133,6 +122,7 @@ def do_path():
     return s
 
 
+"""PROCESSING DATA"""
 def f_max(tmp):
     max_e = 0.
     max_k = None
