@@ -69,8 +69,6 @@ def run_proc():
     if s is not None:
         print("true")
 
-        print("import")
-
         fn.procFile(s)
         print("end of if")
 
