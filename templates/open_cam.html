@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Cam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/reset.css") }}'>
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/styles.css") }}'>
     <style>
 
         #videoElement {
             width: 500px;
             height: 375px;
-            margin-left: 20px
+            margin-left: 20px;
+            padding: 20px;
         }
 
     </style>
 </head>
+<header>
+    <ul>
+       <li><a href="/">Главная</a></li>
+       <li><a href='/about'>О тесте</a></li>
+   </ul>
+</header>
 <body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <h1>Камера</h1>
         <div id="container">
         <video id="video" width="640px" height="480px" autoplay></video>
         <button id="snap">Сделать снимок</button>

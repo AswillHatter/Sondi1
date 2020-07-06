@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>ERROR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/reset.css") }}'>
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/styles.css") }}'>
 </head>
+<header>
+    <ul>
+       <li><a href="/">Главная</a></li>
+       <li><a href='/about'>О тесте</a></li>
+   </ul>
+</header>
 <body>
 <H1>ERROR</H1>
-<p>
+<p class="simple">
     Или загрузите фото, или воспользуйтесь кнопкой "Открыть камеру"!
 </p>
 <button type="submit"><a href="/">вернуться</a></button>

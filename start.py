@@ -25,6 +25,11 @@ def hello_world():
     return render_template('index.html')
 
 
+@app.route('/about', methods=['GET'])
+def about_test():
+    return render_template('about.html')
+
+
 # checking the user`s file extensions
 def allowed_file(filename):
     return '.' in filename and \

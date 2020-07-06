@@ -3,16 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/reset.css") }}'>
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/styles.css") }}'>
 </head>
+<header>
+    <ul>
+       <li><a href="/">Главная</a></li>
+       <li><a href='/about'>О тесте</a></li>
+   </ul>
+</header>
 <body>
-<script>
-    //dump(document.location);
-</script>
-<p>Загрузите фото или нажмите кнопку "Открыть камеру", чтобы воспользоваться камерой</p>
+    <h1></h1>
+<p class="simple">Загрузите фото или нажмите кнопку "Открыть камеру", чтобы воспользоваться камерой</p>
 <h2></h2>
 <div>
     <form method="post" action="" enctype=multipart/form-data>
-        <input type=file name="file">
+        <label class="custom-file-upload">
+           Выбрать файл
+            <input type=file name="file">
+        </label>
         <button type="submit">Загрузить</button>
     </form>
 </div>
